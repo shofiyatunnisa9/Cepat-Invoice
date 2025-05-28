@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { authSchema, type authSchemaDTO } from "@/lib/schemas/schemaRegister";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "react-router-dom";
 function Register() {
   const {
     register,
@@ -17,45 +18,45 @@ function Register() {
     console.log(data);
   };
   return (
-    <div className="w-screen h-screen">
       <form
-        className="flex justify-center items-center h-full  text-center "
+        className="flex flex-col border border-border px-10 py-5 rounded-md space-y-5"
         onSubmit={handleSubmit(submit)}
       >
-        <div className="bg-blue-500 p-10 pt-2 rounded-xl border w-sm">
-          <h1 className="text-black font-bold my-5 text-3xl">Register Pages</h1>
-          <div className="my-2 text-left">
-            <label htmlFor="email" className="w-">
+        <h1 className="text-center text-xl font-bold">Register</h1>
+          <div className="">
+            <label htmlFor="email" className="text-md">
               Email:
             </label>
             <Input
-              className="text-black border bg-white/30"
+              className=""
               placeholder="Email"
               type="email "
               id="email"
               {...register("email")}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && <p className="">{errors.email.message}</p>}
           </div>
-          <div className="my-5 text-left">
-            <label htmlFor="password" className="">
+          <div className="">
+            <label htmlFor="password" className="text-md">
               Password:
             </label>
             <Input
-              className="text-black border bg-white/30"
+              className=""
               type="password"
               id="password"
               placeholder="Password"
               {...register("password")}
             />
-            {errors.password && <p>{errors.password.message}</p>}
+            {errors.password && <p className="">{errors.password.message}</p>}
           </div>
-          <Button className="bg-blue-950 cursor-pointer px-15" type="submit">
+          <Button className="text-lg cursor-pointer" type="submit">
             Register
           </Button>
-        </div>
+          <div>
+            <p>Click here to <Link to={"/login"} className="text-primary">login</Link></p>
+          </div>
+        
       </form>
-    </div>
   );
 }
 
