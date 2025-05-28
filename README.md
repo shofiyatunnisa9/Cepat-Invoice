@@ -32,7 +32,7 @@ FAST-INVOICE/
 ### 📂 Branch Example
 
 ```js
-| Tipe       | Kegunaan                                             | Contoh                                      |
+| Type       | Utility                                              | Example                                     |
 | ---------- | ---------------------------------------------------- | ------------------------------------------- |
 | `feature`  | Added new features                                   | `feature/login-page`, `feature/invoice-api` |
 | `fix`      | Fix bug                                              | `fix/cart-total`, `fix/login-error`         |
