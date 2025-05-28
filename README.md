@@ -2,7 +2,7 @@
 
 ## 📁 Project Structure
 
-```js
+```bash
 FAST-INVOICE/
 ├── public/ # Static files (favicon, images, etc.)
 ├── src/ # Source code
@@ -29,9 +29,9 @@ FAST-INVOICE/
 ├── package.json # Project metadata and dependencies
 ```
 
-### 📂 Branch Example
+### 🌿 Branch Naming Example
 
-```js
+```bash
 | Type       | Utility                                              | Example                                     |
 | ---------- | ---------------------------------------------------- | ------------------------------------------- |
 | `feature`  | Added new features                                   | `feature/login-page`, `feature/invoice-api` |
@@ -41,4 +41,21 @@ FAST-INVOICE/
 | `chore`    | Minor routine/additional tasks                       | `chore/update-deps`, `chore/lint-config`    |
 | `docs`     | Documentation changes                                | `docs/readme-update`, `docs/api-guide`      |
 | `test`     | Testing additions/improvements                       | `test/login-validation`, `test/cart-flow`   |
+```
+
+### 🛠️ Example Create Branch
+
+```bash
+# 1. Move to main branch
+git checkout main
+
+# 2. Pull the latest updates
+git pull origin main
+
+# 3. Create new branch
+git checkout -b feature/login-page
+
+# 4. Push to remote
+git push -u origin feature/login-page
+
 ```
