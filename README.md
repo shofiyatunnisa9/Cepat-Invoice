@@ -1,54 +1,44 @@
-# React + TypeScript + Vite
+# Fast Invoice
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📁 Project Structure
 
 ```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+FAST-INVOICE/
+├── public/ # Static files (favicon, images, etc.)
+├── src/ # Source code
+│ ├── assets/ # Image & asset files
+│ ├── components/ # Reusable React components UI
+│ │ └── UI/ # Styled UI components
+│ ├── Features/ # Feature Modules
+│ │ └── Auth/ # Example Feature: Auth
+│ │ └── Login/ # Feature for Login Page
+│ │ | ├── Hook/ # Custom hooks for Auth
+│ │ | ├── Components/ # UI components related to Auth
+│ │ | └── Login.tsx # Root component for Auth Login
+│ ├── pages/ # Page components (e.g., Login, Register)
+│ ├── hooks/ # Global custom React hooks
+│ ├── styles/ # Styling (CSS/Tailwind, etc.)
+│ ├── libs/ # Shared libraries and utilities
+│ │ ├── api/ # API call functions (e.g., Axios setup)
+│ │ └── schemas/ # Validation logic (e.g., Zod, custom rules)
+│ ├── routes/ # Routing configuration
+│ ├── App.jsx # Root App component
+│ └── main.jsx # Entry point for ReactDOM
+├── .env # Environment variables
+├── .gitignore # Files to be ignored by Git
+├── package.json # Project metadata and dependencies
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 📂 Branch Example
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+| Tipe       | Kegunaan                                             | Contoh                                      |
+| ---------- | ---------------------------------------------------- | ------------------------------------------- |
+| `feature`  | Added new features                                   | `feature/login-page`, `feature/invoice-api` |
+| `fix`      | Fix bug                                              | `fix/cart-total`, `fix/login-error`         |
+| `hotfix`   | Emergency repair in production                       | `hotfix/api-timeout`, `hotfix/logo-typo`    |
+| `refactor` | Changes to code structure without functional changes | `refactor/auth-service`, `refactor/ui-form` |
+| `chore`    | Minor routine/additional tasks                       | `chore/update-deps`, `chore/lint-config`    |
+| `docs`     | Documentation changes                                | `docs/readme-update`, `docs/api-guide`      |
+| `test`     | Testing additions/improvements                       | `test/login-validation`, `test/cart-flow`   |
 ```
