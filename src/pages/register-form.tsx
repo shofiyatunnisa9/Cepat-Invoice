@@ -2,11 +2,7 @@ import Register from "@/features/auth/Register";
 import React from "react";
 
 function registerForm() {
-  return (
-    <div>
-      <Register />
-    </div>
-  );
+  return <Register />;
 }
 
 export default registerForm;
