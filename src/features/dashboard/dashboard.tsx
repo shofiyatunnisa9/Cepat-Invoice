@@ -1,6 +1,8 @@
 const Dashboard = () =>{
   return (
-    <h1>Dashboard</h1>
+    <div className="p-2">
+      <h1>List Invoice</h1>
+    </div>
   )
 }
 export default Dashboard
