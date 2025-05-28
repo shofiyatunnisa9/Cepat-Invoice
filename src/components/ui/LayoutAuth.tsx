@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 
 const LayoutAuth = () =>{
@@ -10,7 +9,9 @@ const LayoutAuth = () =>{
   }
 
   return (
-    <Outlet/>
+    <div className={"w-screen h-screen flex items-center justify-center"}>
+      <Outlet/>
+    </div>
   )
 }
 export default LayoutAuth
