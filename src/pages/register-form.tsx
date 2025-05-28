@@ -1,11 +1,8 @@
-import Register from "@/features/auth/Register";
-import React from "react";
+import Register from "@/features/auth/register/Register";
 
 function registerForm() {
   return (
-    <div>
       <Register />
-    </div>
   );
 }
 
