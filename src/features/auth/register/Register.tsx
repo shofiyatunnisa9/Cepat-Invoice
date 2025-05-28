@@ -18,44 +18,30 @@ function Register() {
     console.log(data);
   };
   return (
-      <form
-        className="flex flex-col border border-border px-10 py-5 rounded-md space-y-5"
-        onSubmit={handleSubmit(submit)}
-      >
+      <form className="flex flex-col border border-border px-10 py-5 rounded-md space-y-5"
+        onSubmit={handleSubmit(submit)}>
         <h1 className="text-center text-xl font-bold">Register</h1>
-          <div className="">
-            <label htmlFor="email" className="text-md">
-              Email:
-            </label>
-            <Input
-              className=""
-              placeholder="Email"
-              type="email "
-              id="email"
-              {...register("email")}
-            />
-            {errors.email && <p className="">{errors.email.message}</p>}
+        <div>
+          <label htmlFor="email" className="text-md">
+            Email:</label>
+          <Input id="email"
+            placeholder="Email" type="email "
+            {...register("email")}/>
+          {errors.email && <p >{errors.email.message}</p>}
           </div>
-          <div className="">
-            <label htmlFor="password" className="text-md">
-              Password:
-            </label>
-            <Input
-              className=""
-              type="password"
-              id="password"
-              placeholder="Password"
-              {...register("password")}
-            />
-            {errors.password && <p className="">{errors.password.message}</p>}
+        <div>
+          <label htmlFor="password" className="text-md">
+            Password: </label>
+          <Input id="password"
+            type="password" placeholder="Password"
+            {...register("password")}/>
+          {errors.password && <p >{errors.password.message}</p>}
           </div>
-          <Button className="text-lg cursor-pointer" type="submit">
-            Register
-          </Button>
-          <div>
-            <p>Click here to <Link to={"/login"} className="text-primary">login</Link></p>
+        <Button className="text-lg cursor-pointer" type="submit">
+          Register</Button>
+        <div>
+          <p>Click here to <Link to={"/login"} className="text-primary">login</Link></p>
           </div>
-        
       </form>
   );
 }

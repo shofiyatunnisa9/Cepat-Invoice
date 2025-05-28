@@ -2,9 +2,7 @@ import Login from "@/features/auth/login/Login";
 
 function loginForm(){
   return(
-    <div>
-      <Login/>
-    </div>
+    <Login/>
   )
 }
 export default loginForm
