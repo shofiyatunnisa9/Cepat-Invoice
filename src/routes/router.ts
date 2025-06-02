@@ -1,11 +1,8 @@
 import LayoutAuth from "@/components/ui/LayoutAuth";
 import LayoutDashboard from "@/components/ui/LayoutDashboard";
 import DashboardPage from "@/pages/dashboard";
-
+import invoiceform from "@/pages/invoice-form";
 import profilePage from "@/pages/profile";
-
-import loginForm from "@/pages/login-form";
-
 import registerForm from "@/pages/register-form";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -16,6 +13,7 @@ export const router = createBrowserRouter([
       { path: "/", Component: DashboardPage },
       { path: "/new-invoice" },
       { path: "/profile", Component: profilePage },
+      { path: "/invoice", Component: invoiceform },
     ],
   },
   {
@@ -27,11 +25,3 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
-
-    children:[
-      {path:'/login', Component: loginForm},
-      {path:'/register', Component: registerForm}
-    ]
-  }
-])
-
