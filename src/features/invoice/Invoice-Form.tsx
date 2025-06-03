@@ -1,14 +1,16 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import CreateDialog from "@/dialog/addItem";
 import { useState } from "react";
+import InvoiceDocument from "./InvoiceDocument";
 
 function InvoiceForm() {
   const today = new Date().toISOString().split("T")[0];
 
   const [date, setDate] = useState<string>(today);
   return (
-    <>
+    <div className="flex flex-col">
       <p className="text-3xl text-center font-bold">Invoice Form</p>
       <div className="max-w-4xl mx-auto p-6 space-y-6">
         <div className="flex justify-between items-center border-b pb-4">
@@ -52,7 +54,7 @@ function InvoiceForm() {
 
         <Card>
           <CardContent className="p-4 overflow-x-auto">
-            <table className="w-full table-auto border-collapse text-sm">
+            <table className="w-full table-auto border-collapse text-sm -mt-5">
               <thead>
                 <tr className="border-b">
                   <th className="text-left text-lg py-2">Product</th>
@@ -65,13 +67,14 @@ function InvoiceForm() {
                 </tr>
               </thead>
             </table>
+            <CreateDialog />
           </CardContent>
         </Card>
 
         <div className="flex justify-end">
           <div className="w-full max-w-xs text-sm">
             <div className="flex justify-between py-1">
-              <span>Subtotal</span>
+              <span>Original Price</span>
               <span>Rp.xx.xxx</span>
             </div>
             <div className="flex justify-between py-1">
@@ -79,7 +82,7 @@ function InvoiceForm() {
               <span>%</span>
             </div>
             <div className="flex justify-between py-1">
-              <span>Subtotal (discount)</span>
+              <span>Discounted Price</span>
               <span>Rp.xx.xxx</span>
             </div>
 
@@ -89,8 +92,9 @@ function InvoiceForm() {
             </div>
           </div>
         </div>
+        <InvoiceDocument />
       </div>
-    </>
+    </div>
   );
 }
 

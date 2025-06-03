@@ -1,9 +1,15 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/router";
-import "@/styles/globals.css"
+import "@/styles/globals.css";
+import { UserProvider } from "./contexts/user";
+import { InvoiceProvider } from "./contexts/invoice";
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <UserProvider>
+      <RouterProvider router={router} />;
+    </UserProvider>
+  );
 }
 
 export default App;
