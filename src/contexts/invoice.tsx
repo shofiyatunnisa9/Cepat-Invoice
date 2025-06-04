@@ -1,20 +1,14 @@
+import type { schemaItemDTO } from "@/lib/schemas/schemaItem";
 import { createContext, useContext, useState, type ReactNode } from "react";
-
-export interface InvoiceItem {
-  product: string;
-  price: number;
-  quantity: number;
-}
 
 export interface InvoiceData {
   date: string;
   invoiceNumber: string;
-  customer: {
-    name: string;
-    address: string;
-    phone: string;
-  };
-  items: InvoiceItem[];
+  name: string;
+  address: string;
+  phone: string;
+
+  items: schemaItemDTO[];
 }
 
 interface InvoiceContextType {

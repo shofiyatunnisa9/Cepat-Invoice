@@ -4,11 +4,28 @@ import { Textarea } from "@/components/ui/textarea";
 import CreateDialog from "@/dialog/addItem";
 import { useState } from "react";
 import InvoiceDocument from "./InvoiceDocument";
+import { useFieldArray } from "react-hook-form";
+import { useInputForm } from "@/hooks/useInputForm";
+import { schemaItem, type schemaItemDTO } from "@/lib/schemas/schemaItem";
+
+export type InvoiceItem = {
+  product: string;
+  price: number;
+  quantity: number;
+};
 
 function InvoiceForm() {
   const today = new Date().toISOString().split("T")[0];
 
   const [date, setDate] = useState<string>(today);
+  // const { control, register, handleSubmit } =
+  //   useInputForm<schemaItemDTO>(schemaItem);
+
+  // const { field, append, remove } = useFieldArray({
+  //   control,
+  //   name: "items",
+  // });
+
   return (
     <div className="flex flex-col">
       <p className="text-3xl text-center font-bold">Invoice Form</p>
@@ -54,16 +71,16 @@ function InvoiceForm() {
 
         <Card>
           <CardContent className="p-4 overflow-x-auto">
-            <table className="w-full table-auto border-collapse text-sm -mt-5">
+            <table className="w-full border-collapse text-sm text-left -mt-5">
               <thead>
                 <tr className="border-b">
-                  <th className="text-left text-lg py-2">Product</th>
+                  <th className="w-2/8 text-lg py-2">Product</th>
 
-                  <th className="text-right  text-lg py-2">Price</th>
+                  <th className="w-1/8 text-lg py-2">Price</th>
 
-                  <th className="text-right text-lg py-2">Quantity</th>
+                  <th className="w-2/8 text-lg py-2">Quantity</th>
 
-                  <th className="text-right text-lg py-2">Total</th>
+                  <th className="w-1/8 text-lg py-2">Total</th>
                 </tr>
               </thead>
             </table>

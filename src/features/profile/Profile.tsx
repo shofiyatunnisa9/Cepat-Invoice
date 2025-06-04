@@ -1,18 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useInputForm } from "@/hooks/useInputForm";
 import { profileSchema, type profileDTO } from "@/lib/schemas/schemaProfile";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 
 function Profile() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<profileDTO>({
-    mode: "onChange",
-    resolver: zodResolver(profileSchema),
-  });
+  const { register, handleSubmit, errors } =
+    useInputForm<profileDTO>(profileSchema);
 
   const submit = (data: profileDTO) => {
     console.log(data);

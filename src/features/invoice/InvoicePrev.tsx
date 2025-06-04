@@ -80,9 +80,9 @@ export function PdfDocumentPrev() {
             <Text style={{ fontWeight: "bold", marginBottom: 4 }}>
               Customer:
             </Text>
-            <Text>Name Customer</Text>
-            <Text>Address</Text>
-            <Text>Phone</Text>
+            <Text>Name :</Text>
+            <Text>Address :</Text>
+            <Text>Phone : </Text>
           </View>
 
           <View style={styles.box}>
@@ -108,9 +108,9 @@ export function PdfDocumentPrev() {
           {/* Exxample Item */}
           <View style={styles.tableRow}>
             <Text style={[styles.cell]}>Product A</Text>
-            <Text style={[styles.cell, { textAlign: "right" }]}>Rp10.000</Text>
+            <Text style={[styles.cell, { textAlign: "right" }]}>Rp</Text>
             <Text style={[styles.cell, { textAlign: "right" }]}>2</Text>
-            <Text style={[styles.cell, { textAlign: "right" }]}>Rp20.000</Text>
+            <Text style={[styles.cell, { textAlign: "right" }]}>Rp</Text>
           </View>
         </View>
 
@@ -118,7 +118,7 @@ export function PdfDocumentPrev() {
         <View style={styles.totalBox}>
           <View style={styles.totalRow}>
             <Text>Original Price</Text>
-            <Text>Rp20.000</Text>
+            <Text>Rp</Text>
           </View>
           <View style={styles.totalRow}>
             <Text>Discount</Text>
@@ -126,11 +126,11 @@ export function PdfDocumentPrev() {
           </View>
           <View style={styles.totalRow}>
             <Text>Discounted Price</Text>
-            <Text>Rp20.000</Text>
+            <Text>Rp</Text>
           </View>
           <View style={[styles.totalRow, styles.totalBold]}>
             <Text>Total</Text>
-            <Text>Rp20.000</Text>
+            <Text>Rp</Text>
           </View>
         </View>
       </Page>
