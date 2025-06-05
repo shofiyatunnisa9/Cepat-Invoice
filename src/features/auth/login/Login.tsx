@@ -2,14 +2,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useInputForm } from "@/hooks/useInputForm";
 import { authSchema, type authSchemaDTO } from "@/lib/schemas/schemaRegister";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { api } from "@/utils/api";
+import Cookies from "js-cookie";
+import { toast } from "sonner";
 
 function Login() {
   const { register, handleSubmit, errors } =
     useInputForm<authSchemaDTO>(authSchema);
+  const navigate = useNavigate();
+  const submit = async (data: authSchemaDTO) => {
+    try {
+      const res = await api.post("/login", data);
+      const token = res.data.token;
+      console.log(res);
 
-  const submit = (data: authSchemaDTO) => {
-    console.log(data);
+      Cookies.set("token", token);
+      toast.success("Login succes!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Something wrong!");
+    }
   };
 
   return (

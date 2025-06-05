@@ -1,17 +1,25 @@
-import { Outlet, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
-const LayoutAuth = () =>{
-  const token = localStorage.getItem('token')
-  const navigate = useNavigate()
+const LayoutAuth = () => {
+  const [isLogin, setIsLogin] = useState<boolean>(true);
 
-  if(token){
-      navigate('/')
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return setIsLogin(false);
+    }
+    setIsLogin(true);
+  }, [isLogin]);
+
+  if (isLogin) {
+    return <Navigate to={"/"} />;
   }
 
   return (
     <div className={"w-screen h-screen flex items-center justify-center"}>
-      <Outlet/>
+      <Outlet />
     </div>
-  )
-}
-export default LayoutAuth
+  );
+};
+export default LayoutAuth;
