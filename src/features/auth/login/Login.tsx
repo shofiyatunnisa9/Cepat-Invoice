@@ -6,23 +6,26 @@ import { Link, useNavigate } from "react-router-dom";
 import { api } from "@/utils/api";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
+import { useMutateData } from "@/hooks/useMutate";
 
 function Login() {
   const { register, handleSubmit, errors } =
     useInputForm<authSchemaDTO>(authSchema);
-  const navigate = useNavigate();
-  const submit = async (data: authSchemaDTO) => {
-    try {
-      const res = await api.post("/login", data);
-      const token = res.data.token;
-      console.log(res);
 
-      Cookies.set("token", token);
-      toast.success("Login succes!");
-      navigate("/");
-    } catch (error) {
-      toast.error("Something wrong!");
-    }
+  const {
+    mutateAsync,
+    isPending,
+    data: fieldData,
+  } = useMutateData<authSchemaDTO>({
+    key: "login",
+    endpoint: "/login",
+    schema: authSchema,
+    navigate: "/",
+    stores: "setToken",
+  });
+
+  const submit = async (data: authSchemaDTO) => {
+    await mutateAsync(data);
   };
 
   return (
@@ -59,7 +62,11 @@ function Login() {
           <p className="text-destructive">{errors.password.message}</p>
         )}
       </div>
-      <Button className="text-lg cursor-pointer" type="submit">
+      <Button
+        disabled={isPending ? true : false}
+        className="text-lg cursor-pointer"
+        type="submit"
+      >
         Login{" "}
       </Button>
       <div>

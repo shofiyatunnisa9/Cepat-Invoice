@@ -1,10 +1,9 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import Sidebar from "./sidebar";
+import { useStoreProfile } from "@/store/user";
+import { api } from "@/utils/api";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { api } from "@/utils/api";
-import { useStoreProfile } from "@/store/user";
-import { isAxiosError } from "axios";
+import { Outlet, useNavigate } from "react-router-dom";
+import Sidebar from "./sidebar";
 
 const LayoutDashboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -18,11 +17,7 @@ const LayoutDashboard = () => {
     setIsLoading(true);
     if (isLoading) {
       api
-        .get("/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .get("/profile")
         .then((res) => {
           setProfile(res.data);
           setIsLoading(false);
@@ -39,10 +34,14 @@ const LayoutDashboard = () => {
 
   if (isLoading) <h1>Loading!!!</h1>;
   return (
-    <div className="grid grid-cols-[250px_1fr] w-full h-screen ">
-      <Sidebar />
-      <Outlet />
-    </div>
+    <>
+      <div className=" grid grid-cols-[250px_1fr] w-full h-screen ">
+        <Sidebar />
+        {/* </div> */}
+        {/* <div className="overflow-auto wl-2xl pl-60"> */}
+        <Outlet />
+      </div>
+    </>
   );
 };
 export default LayoutDashboard;

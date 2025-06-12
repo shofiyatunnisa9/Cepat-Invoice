@@ -1,10 +1,11 @@
 import z from "zod";
 
-export const schemaItem = z.object({
-  noInvoice: z.string(),
-  company: z.string(),
-  address: z.string(),
-  phone: z.string(),
+export const SchemaInvoice = z.object({
+  noInvoice: z.string().optional(),
+  date: z.date(),
+  company: z.string().min(1, { message: "Company required" }),
+  address: z.string().min(1, { message: "Address required" }),
+  phoneNumber: z.string().min(1, { message: "Phone Number required" }),
   items: z.array(
     z.object({
       product: z.string().nonempty(),
@@ -13,6 +14,9 @@ export const schemaItem = z.object({
       total: z.number().min(1, { message: "total required" }),
     })
   ),
+  originalPrice: z.number(),
+  discount: z.number(),
+  discountPrice: z.number(),
 });
 
-export type schemaItemDTO = z.infer<typeof schemaItem>;
+export type schemaInvoiceDTO = z.infer<typeof SchemaInvoice>;

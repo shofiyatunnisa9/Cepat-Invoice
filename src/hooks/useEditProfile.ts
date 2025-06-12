@@ -6,14 +6,14 @@ import { api } from "@/utils/api";
 import { ProfileSchema, type profileDTO } from "@/lib/schemas/schemaProfile";
 import Cookies from "js-cookie";
 
-export function useCreateProfile() {
+export function useEditProfile() {
   const form = useForm<profileDTO>({
     mode: "onChange",
     resolver: zodResolver(ProfileSchema),
   });
 
   const mutation = useMutation({
-    mutationKey: ["CreateProfile"],
+    mutationKey: ["EditProfile"],
     mutationFn: async (data: profileDTO) => {
       const formData = new FormData();
       // formData.append("image", data.image);
@@ -22,12 +22,12 @@ export function useCreateProfile() {
       formData.append("phoneNumber", data.phoneNumber);
       formData.append("address", data.address);
 
-      const res = await api.post("/profile", formData);
+      const res = await api.patch("/profile", formData);
 
       return res.data;
     },
     onSuccess: () => {
-      toast.success("Profile saved!");
+      toast.success("Profile Edited!");
       form.reset();
     },
     onError: (err: any) => {

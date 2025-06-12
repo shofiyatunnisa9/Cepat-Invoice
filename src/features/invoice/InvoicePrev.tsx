@@ -1,4 +1,13 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import type { schemaInvoiceDTO } from "@/lib/schemas/schemaItem";
+import { useStoreProfile } from "@/store/user";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+} from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: {
@@ -15,10 +24,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderBottom: "1 solid #ccc",
     paddingBottom: 10,
+    width: "50%",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  image: {
+    width: 60,
+    height: 60,
   },
   grid: {
     flexDirection: "row",
@@ -57,22 +71,36 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+interface PdfProps {
+  data: schemaInvoiceDTO;
+}
 
 // 2. Create PDF Document Component
-export function PdfDocumentPrev() {
+export function PdfDocumentPrev({ data }: PdfProps) {
+  const { profile } = useStoreProfile();
+  const {
+    company,
+    address,
+    date,
+    discount,
+    discountPrice,
+    items,
+    originalPrice,
+    phoneNumber,
+    noInvoice,
+  } = data;
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.heading}>
           <View>
-            <Text>Date :</Text>
-            <Text>Invoice Number : </Text>
+            <Text>Date : {new Date(date).toLocaleString()}</Text>
+            <Text>Invoice Number : {noInvoice} </Text>
           </View>
         </View>
         <View style={{ alignItems: "flex-end" }}>
-          <Text style={styles.title}>Cepat</Text>
-          <Text style={{ marginTop: "5px" }}>Invoice</Text>
+          <Image style={styles.image} src={profile?.image} />
         </View>
         {/* customer dan from info */}
         <View style={styles.grid}>
@@ -80,19 +108,16 @@ export function PdfDocumentPrev() {
             <Text style={{ fontWeight: "bold", marginBottom: 4 }}>
               Customer:
             </Text>
-            <Text>Name :</Text>
-            <Text>Address :</Text>
-            <Text>Phone : </Text>
+            <Text>Name : {company}</Text>
+            <Text>Address : {address}</Text>
+            <Text>Phone : {phoneNumber}</Text>
           </View>
 
           <View style={styles.box}>
             <Text style={{ fontWeight: "bold", marginBottom: 4 }}>From:</Text>
-            <Text>Cepat Invoice Business</Text>
-            <Text>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste
-              iusto atque quam at iure minus numquam molestias.
-            </Text>
-            <Text>(+62) 123-4567</Text>
+            <Text>{profile?.company}</Text>
+            <Text>{profile?.address}</Text>
+            <Text>{profile?.phone}</Text>
           </View>
         </View>
 
@@ -105,32 +130,40 @@ export function PdfDocumentPrev() {
             <Text style={[styles.cell, { textAlign: "right" }]}>Total</Text>
           </View>
 
-          {/* Exxample Item */}
-          <View style={styles.tableRow}>
-            <Text style={[styles.cell]}>Product A</Text>
-            <Text style={[styles.cell, { textAlign: "right" }]}>Rp</Text>
-            <Text style={[styles.cell, { textAlign: "right" }]}>2</Text>
-            <Text style={[styles.cell, { textAlign: "right" }]}>Rp</Text>
-          </View>
+          {/* Table Product */}
+          {items.map((item, index) => (
+            <View key={index} style={styles.tableRow}>
+              <Text style={[styles.cell]}>{item.product}</Text>
+              <Text style={[styles.cell, { textAlign: "right" }]}>
+                Rp. {item.price}
+              </Text>
+              <Text style={[styles.cell, { textAlign: "right" }]}>
+                {item.quantity}
+              </Text>
+              <Text style={[styles.cell, { textAlign: "right" }]}>
+                Rp. {item.total}
+              </Text>
+            </View>
+          ))}
         </View>
 
         {/* Total */}
         <View style={styles.totalBox}>
           <View style={styles.totalRow}>
-            <Text>Original Price</Text>
-            <Text>Rp</Text>
+            <Text>Original Price </Text>
+            <Text>Rp. {originalPrice}</Text>
           </View>
           <View style={styles.totalRow}>
             <Text>Discount</Text>
-            <Text>0%</Text>
+            <Text>{discount}%</Text>
           </View>
           <View style={styles.totalRow}>
             <Text>Discounted Price</Text>
-            <Text>Rp</Text>
+            <Text>Rp. {discountPrice}</Text>
           </View>
           <View style={[styles.totalRow, styles.totalBold]}>
             <Text>Total</Text>
-            <Text>Rp</Text>
+            <Text>Rp. {discountPrice}</Text>
           </View>
         </View>
       </Page>

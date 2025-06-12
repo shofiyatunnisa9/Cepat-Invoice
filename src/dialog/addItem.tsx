@@ -1,20 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useInputForm } from "@/hooks/useInputForm";
-import { schemaItem, type schemaItemDTO } from "@/lib/schemas/schemaItem";
+import { SchemaInvoice, type schemaInvoiceDTO } from "@/lib/schemas/schemaItem";
+import { api } from "@/utils/api";
 import { useFieldArray } from "react-hook-form";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { FaSave } from "react-icons/fa";
+import { toast } from "sonner";
 
 function CreateDialog() {
-  const { control, register, watch, errors, handleSubmit } =
-    useInputForm<schemaItemDTO>(schemaItem);
+  const { control, register, watch, handleSubmit } =
+    useInputForm<schemaInvoiceDTO>(SchemaInvoice);
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "items",
   });
+  const onSubmit = async (data: schemaInvoiceDTO) => {
+    try {
+      const res = await api.post("/invoice", data);
+      console.log(res);
+      toast.success("Succes!!");
+    } catch (error) {
+      toast.error("Something wrong!!");
+    }
+    console.log(data);
+  };
 
   return (
     <div className="space-y-2">
@@ -74,16 +85,14 @@ function CreateDialog() {
       ))}
       <Button
         className="mt-3 cursor-pointer"
-        onClick={() => append({ product: "", price: 0, quantity: 0, total: 0 })}
+        onClick={() => {
+          append({ product: "", price: 0, quantity: 0, total: 0 });
+          handleSubmit(onSubmit)();
+        }}
       >
         <IoAddCircleSharp />
         Add Item
       </Button>
-      {/* <div className="mt-2">
-        <Button type="submit" className="cursor-pointer">
-          Save
-        </Button>
-      </div> */}
     </div>
   );
 }

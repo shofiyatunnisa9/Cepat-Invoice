@@ -1,5 +1,21 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const api = axios.create({
-  baseURL: "http://192.168.18.139:2828/api/v1",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
+
+api.interceptors.request.use(
+  (config) => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.error("Request Error", error);
+    return Promise.reject(error);
+  }
+);

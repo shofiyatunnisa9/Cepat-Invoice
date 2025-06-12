@@ -1,8 +1,6 @@
 import InvoiceDocument from "@/features/invoice/InvoiceDocument";
-import React from "react";
 
-function InvoiceDoc() {
+function InvoiceDocumentPDF() {
   return <InvoiceDocument />;
 }
-
-export default InvoiceDoc;
+export default InvoiceDocumentPDF;

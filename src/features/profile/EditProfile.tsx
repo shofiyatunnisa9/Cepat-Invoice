@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCreateProfile } from "@/hooks/useCreateProfile";
-import EditProfile from "./EditProfile";
-import { Link } from "react-router-dom";
+import { useEditProfile } from "@/hooks/useEditProfile";
 // import { useStoreProfile } from "@/store/user";
 
-function Profile() {
-  const { form, onSubmit, isPending } = useCreateProfile();
+function EditProfile() {
+  const { form, onSubmit, isPending } = useEditProfile();
   const { register, formState, handleSubmit } = form;
   const { errors } = formState;
   // const { profile } = useStoreProfile();
@@ -19,7 +17,7 @@ function Profile() {
           className=" pt-5 w-2/4 space-y-5 items-center"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <p className="text-3xl text-center font-bold">Edit Account Profile</p>
+          <p className="text-3xl text-center font-bold">Account Profile</p>
 
           <div>
             <label htmlFor="image">
@@ -84,7 +82,7 @@ function Profile() {
           </div>
 
           <Button type="submit" disabled={isPending} className="cursor-pointer">
-            Save
+            Save Change
           </Button>
         </form>
       </Form>
@@ -92,4 +90,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default EditProfile;
