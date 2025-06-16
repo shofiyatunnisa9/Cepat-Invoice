@@ -16,7 +16,6 @@ export function useCreateProfile() {
     mutationKey: ["CreateProfile"],
     mutationFn: async (data: profileDTO) => {
       const formData = new FormData();
-      // formData.append("image", data.image);
       formData.append("image", data.image[0]);
       formData.append("company", data.company);
       formData.append("phoneNumber", data.phoneNumber);

@@ -1,7 +1,7 @@
-import Profile from "@/features/profile/Profile";
+import EditProfile from "@/features/profile/EditProfiles";
 
-function profilePage() {
-  return <Profile />;
+function ProfilePage() {
+  return <EditProfile />;
 }
 
-export default profilePage;
+export default ProfilePage;

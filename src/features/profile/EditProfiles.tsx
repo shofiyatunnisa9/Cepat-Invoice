@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useEditProfile } from "@/hooks/useEditProfile";
 import { ImagePlus } from "lucide-react";
 
-function Profile() {
+function EditProfile() {
   const { form, onSubmit, handleFileChange, isPending } = useEditProfile();
   const { register, formState, handleSubmit } = form;
   const { errors } = formState;
@@ -84,4 +84,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default EditProfile;
