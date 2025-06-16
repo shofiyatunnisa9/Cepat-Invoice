@@ -2,13 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useEditProfile } from "@/hooks/useEditProfile";
-// import { useStoreProfile } from "@/store/user";
 
-function EditProfile() {
+function RegisterProfile() {
   const { form, onSubmit, isPending } = useEditProfile();
   const { register, formState, handleSubmit } = form;
   const { errors } = formState;
-  // const { profile } = useStoreProfile();
 
   return (
     <div className="flex justify-center w-auto">
@@ -32,16 +30,7 @@ function EditProfile() {
               hidden
               {...register("image")}
               accept="image/*"
-              // onChange={(e) => {
-              //   handleFileChange(e);
-              // }}
             />
-            {/* {errors.image && (
-              <p className="text-destructive">
-                {errors.image.message?.toString()}
-              </p>
-            )} */}
-
             <p className="text-sm">Upload Profile</p>
           </div>
 
@@ -90,4 +79,4 @@ function EditProfile() {
   );
 }
 
-export default EditProfile;
+export default RegisterProfile;

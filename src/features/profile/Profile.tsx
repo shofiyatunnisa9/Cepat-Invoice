@@ -1,16 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCreateProfile } from "@/hooks/useCreateProfile";
-import EditProfile from "./EditProfile";
-import { Link } from "react-router-dom";
-// import { useStoreProfile } from "@/store/user";
+import { useEditProfile } from "@/hooks/useEditProfile";
+import { ImagePlus } from "lucide-react";
 
 function Profile() {
-  const { form, onSubmit, isPending } = useCreateProfile();
+  const { form, onSubmit, handleFileChange, isPending } = useEditProfile();
   const { register, formState, handleSubmit } = form;
   const { errors } = formState;
-  // const { profile } = useStoreProfile();
 
   return (
     <div className="flex justify-center w-auto">
@@ -21,30 +18,25 @@ function Profile() {
         >
           <p className="text-3xl text-center font-bold">Edit Account Profile</p>
 
-          <div>
-            <label htmlFor="image">
+          <div className="flex justify-center">
+            <label htmlFor="image" className="relative group cursor-pointer w-fit">
               <img
-                className="border-2 rounded-full size-20"
-                src="https://api.dicebear.com/9.x/adventurer/svg?seed=Emery"
+                className="border-2 rounded-full size-40 object-cover"
+                src={`${form.watch("imageUrl")}` || `https://api.dicebear.com/9.x/adventurer/svg?seed=Emery`}
+                alt="Profile Preview"
               />
-            </label>
+              <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <ImagePlus className="text-white w-10 h-10"/>
+                </div>
+              </label>
             <Input
               type="file"
               id="image"
               hidden
               {...register("image")}
               accept="image/*"
-              // onChange={(e) => {
-              //   handleFileChange(e);
-              // }}
+              onChange={handleFileChange}
             />
-            {/* {errors.image && (
-              <p className="text-destructive">
-                {errors.image.message?.toString()}
-              </p>
-            )} */}
-
-            <p className="text-sm">Upload Profile</p>
           </div>
 
           <div>

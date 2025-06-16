@@ -1,7 +1,8 @@
-import EditProfile from "@/features/profile/EditProfile";
+import RegisterProfile from "@/features/profile/RegisterProfile";
 
-function ProfileEdit() {
-  return <EditProfile />;
+
+function RegisterProfilePage() {
+  return <RegisterProfile />;
 }
 
-export default ProfileEdit;
+export default RegisterProfilePage;

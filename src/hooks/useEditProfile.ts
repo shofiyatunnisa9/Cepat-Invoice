@@ -5,22 +5,47 @@ import { toast } from "sonner";
 import { api } from "@/utils/api";
 import { ProfileSchema, type profileDTO } from "@/lib/schemas/schemaProfile";
 import Cookies from "js-cookie";
+import { useProfile } from "./useProfile";
+import { useEffect } from "react";
 
 export function useEditProfile() {
+  const { data } = useProfile();
+
   const form = useForm<profileDTO>({
     mode: "onChange",
     resolver: zodResolver(ProfileSchema),
+    defaultValues: {
+      company: "",
+      address: "",
+      phoneNumber: "",
+      image: undefined,
+      imageUrl: "",
+    },
   });
+
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        company: data.company,
+        phoneNumber: data.phone,
+        address: data.address,
+        imageUrl: data.image,
+      });
+    }
+  }, [data, form]);
 
   const mutation = useMutation({
     mutationKey: ["EditProfile"],
     mutationFn: async (data: profileDTO) => {
       const formData = new FormData();
-      // formData.append("image", data.image);
-      formData.append("image", data.image[0]);
+
       formData.append("company", data.company);
-      formData.append("phoneNumber", data.phoneNumber);
       formData.append("address", data.address);
+      formData.append("phoneNumber", data.phoneNumber);
+
+      if (data.image && data.image.length > 0) {
+        formData.append("image", data.image[0]);
+      }
 
       const res = await api.patch("/profile", formData);
 
@@ -39,11 +64,13 @@ export function useEditProfile() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
-    console.log(files[0]);
+
+    const file = files[0];
+    form.setValue("image", files);
+    form.setValue("imageUrl", URL.createObjectURL(file));
   };
 
   const onSubmit = async (data: profileDTO) => {
-    console.log(data);
     await mutation.mutateAsync(data);
   };
 

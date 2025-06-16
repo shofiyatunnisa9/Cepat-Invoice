@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const LayoutAuth = () => {
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  // const [isLogin, setIsLogin] = useState<boolean>(true);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return setIsLogin(false);
-    }
-    setIsLogin(true);
-  }, [isLogin]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     return setIsLogin(false);
+  //   }
+  //   setIsLogin(true);
+  // }, [isLogin]);
 
-  if (isLogin) {
-    return <Navigate to={"/"} />;
-  }
+  // if (isLogin) {
+  //   return <Navigate to={"/"} />;
+  // }
 
   return (
     <div className={"w-screen h-screen flex items-center justify-center"}>
