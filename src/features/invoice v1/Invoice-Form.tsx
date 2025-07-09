@@ -2,7 +2,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
-import InvoiceDocument from "./InvoiceDocument";
 import { SchemaInvoice, type InvoiceDTO } from "@/lib/schemas/schemaItem";
 import { Button } from "@/components/ui/button";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
@@ -10,12 +9,11 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useProfile } from "@/hooks/useProfile";
-import { PdfDocumentPrev } from "./InvoicePrev";
 import UseCreateInvoice from "@/hooks/useCreateInvoice";
 import { Form } from "@/components/ui/form";
 
 function InvoiceForm() {
-  const {form, mutation, onSubmit} = UseCreateInvoice()
+  const {form, onSubmit} = UseCreateInvoice()
   const today = new Date().toISOString().split("T")[0];
   const [date, setDate] = useState<string>(today);
   const [discount, setDiscount] = useState<number>(0);
@@ -67,10 +65,7 @@ function InvoiceForm() {
     setValue("total", total);
   }, [discount, total, setValue, subTotal]);
   
-  const handleClick = async (data: InvoiceDTO) => {
-    // setValue("invoices", PdfDocumentPrev)
-    console.log(data);
-  };
+  
 
   if(!UserProfile) return <h1> User belum membuat profile</h1>
   return (

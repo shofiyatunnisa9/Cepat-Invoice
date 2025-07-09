@@ -17,9 +17,9 @@ function UseCreateInvoice() {
   const mutation = useMutation({
     mutationKey: ["CreateInvoice"],
     mutationFn: async (data: InvoiceDTO) => {
-      // if (!UserProfile) throw new Error("User profile belum siap");
+      if (!UserProfile) throw new Error("User profile belum siap");
 
-      // const pdfFile = await generateInvoicePdf(data, UserProfile);
+      const pdfFile = await generateInvoicePdf(data, UserProfile);
 
       const formData = new FormData();
       formData.append("date", data.date);
@@ -31,7 +31,7 @@ function UseCreateInvoice() {
       formData.append("subTotal", String(data.subTotal));
       formData.append("discount", String(data.discount));
       formData.append("total", String(data.total));
-      // formData.append("invoice", pdfFile);
+      formData.append("invoices", pdfFile);
 
       // console.log(formData);
       const res = await api.post("/invoice", formData);
