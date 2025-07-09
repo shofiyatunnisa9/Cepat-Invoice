@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEditProfile } from "@/hooks/useEditProfile";
+import { useCreateProfile } from "@/hooks/useCreateProfile";
 
 function RegisterProfile() {
-  const { form, onSubmit, isPending } = useEditProfile();
+  const { form, onSubmit, isPending } = useCreateProfile();
   const { register, formState, handleSubmit } = form;
   const { errors } = formState;
 

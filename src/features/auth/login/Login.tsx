@@ -2,10 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useInputForm } from "@/hooks/useInputForm";
 import { authSchema, type authSchemaDTO } from "@/lib/schemas/schemaRegister";
-import { Link, useNavigate } from "react-router-dom";
-import { api } from "@/utils/api";
-import Cookies from "js-cookie";
-import { toast } from "sonner";
+import { Link } from "react-router-dom";
 import { useMutateData } from "@/hooks/useMutate";
 
 function Login() {
@@ -15,7 +12,6 @@ function Login() {
   const {
     mutateAsync,
     isPending,
-    data: fieldData,
   } = useMutateData<authSchemaDTO>({
     key: "login",
     endpoint: "/login",

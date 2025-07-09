@@ -1,7 +1,11 @@
-import EditProfile from "@/features/profile/EditProfiles";
+// import EditProfile from "@/features/profile/EditProfiles";
+
+import RegisterProfile from "@/features/profile/RegisterProfile";
 
 function ProfilePage() {
-  return <EditProfile />;
+  // return <EditProfile />;
+  return <RegisterProfile/>
+
 }
 
 export default ProfilePage;
