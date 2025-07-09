@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -7,6 +7,7 @@ import { ProfileSchema, type profileDTO } from "@/lib/schemas/schemaProfile";
 import Cookies from "js-cookie";
 
 export function useCreateProfile() {
+  const queryClient = useQueryClient();
   const form = useForm<profileDTO>({
     mode: "onChange",
     resolver: zodResolver(ProfileSchema),
@@ -27,6 +28,8 @@ export function useCreateProfile() {
     },
     onSuccess: () => {
       toast.success("Profile saved!");
+      queryClient.invalidateQueries({ queryKey: ["Profile"] });
+
       form.reset();
     },
     onError: (err: any) => {

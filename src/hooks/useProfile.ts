@@ -6,8 +6,8 @@ import Cookies from "js-cookie";
 export function useProfile() {
   const token = Cookies.get("token");
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["profile"],
+  const { data: UserProfile, isLoading } = useQuery({
+    queryKey: ["Profile"],
     queryFn: async () => {
       const res = await api.get<profileType>("/profile", {
         headers: { Authorization: `Bearer ${token}` },
@@ -16,5 +16,5 @@ export function useProfile() {
     },
   });
 
-  return { data, isLoading };
+  return { UserProfile, isLoading };
 }

@@ -2,11 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useCreateProfile } from "@/hooks/useCreateProfile";
+import { useState } from "react";
 
 function RegisterProfile() {
   const { form, onSubmit, isPending } = useCreateProfile();
-  const { register, formState, handleSubmit } = form;
+  const { register, formState, handleSubmit, setValue } = form;
   const { errors } = formState;
+  const [preview, setPreview] = useState<string | undefined>(undefined)
 
   return (
     <div className="flex justify-center w-auto">
@@ -15,13 +17,13 @@ function RegisterProfile() {
           className=" pt-5 w-2/4 space-y-5 items-center"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <p className="text-3xl text-center font-bold">Account Profile</p>
+          <p className="text-3xl text-center font-bold">Create Account Profile</p>
 
-          <div>
+          <div  className="px-55">
             <label htmlFor="image">
               <img
-                className="border-2 rounded-full size-20"
-                src="https://api.dicebear.com/9.x/adventurer/svg?seed=Emery"
+                className="rounded-full size-30"
+                src={preview ?? "https://api.dicebear.com/9.x/icons/svg?seed=Brian"}
               />
             </label>
             <Input
@@ -30,8 +32,18 @@ function RegisterProfile() {
               hidden
               {...register("image")}
               accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  setPreview(URL.createObjectURL(file));
+                  const dataTransfer = new DataTransfer();
+                  dataTransfer.items.add(file);
+                  const fileList = dataTransfer.files;
+                  setValue("image", fileList);
+                }
+              }}
             />
-            <p className="text-sm">Upload Profile</p>
+            <p className="text-sm text-center">Upload Profile</p>
           </div>
 
           <div>
