@@ -1,5 +1,5 @@
-import type { schemaInvoiceDTO } from "@/lib/schemas/schemaItem";
-import { useStoreProfile } from "@/store/user";
+import type { InvoiceDTO } from "@/lib/schemas/schemaItem";
+import type { profileType } from "@/types/user";
 import {
   Document,
   Page,
@@ -72,20 +72,21 @@ const styles = StyleSheet.create({
   },
 });
 interface PdfProps {
-  data: schemaInvoiceDTO;
+  data: InvoiceDTO;
+  profile: profileType
 }
 
 // 2. Create PDF Document Component
-export function PdfDocumentPrev({ data }: PdfProps) {
-  const { profile } = useStoreProfile();
+export function PdfDocumentPrev({ data, profile }: PdfProps) {
+  
   const {
     company,
     address,
     date,
     discount,
-    discountPrice,
-    items,
-    originalPrice,
+    total,
+    item,
+    subTotal,
     phoneNumber,
     noInvoice,
   } = data;
@@ -115,9 +116,9 @@ export function PdfDocumentPrev({ data }: PdfProps) {
 
           <View style={styles.box}>
             <Text style={{ fontWeight: "bold", marginBottom: 4 }}>From:</Text>
-            <Text>{profile?.company}</Text>
-            <Text>{profile?.address}</Text>
-            <Text>{profile?.phone}</Text>
+            <Text>{profile.company}</Text>
+            <Text>{profile.address}</Text>
+            <Text>{profile.phone}</Text>
           </View>
         </View>
 
@@ -131,7 +132,7 @@ export function PdfDocumentPrev({ data }: PdfProps) {
           </View>
 
           {/* Table Product */}
-          {items.map((item, index) => (
+          {item.map((item, index) => (
             <View key={index} style={styles.tableRow}>
               <Text style={[styles.cell]}>{item.product}</Text>
               <Text style={[styles.cell, { textAlign: "right" }]}>
@@ -151,7 +152,7 @@ export function PdfDocumentPrev({ data }: PdfProps) {
         <View style={styles.totalBox}>
           <View style={styles.totalRow}>
             <Text>Original Price </Text>
-            <Text>Rp. {originalPrice}</Text>
+            <Text>Rp. {subTotal}</Text>
           </View>
           <View style={styles.totalRow}>
             <Text>Discount</Text>
@@ -159,11 +160,11 @@ export function PdfDocumentPrev({ data }: PdfProps) {
           </View>
           <View style={styles.totalRow}>
             <Text>Discounted Price</Text>
-            <Text>Rp. {discountPrice}</Text>
+            <Text>Rp. {total}</Text>
           </View>
           <View style={[styles.totalRow, styles.totalBold]}>
             <Text>Total</Text>
-            <Text>Rp. {discountPrice}</Text>
+            <Text>Rp. {total}</Text>
           </View>
         </View>
       </Page>

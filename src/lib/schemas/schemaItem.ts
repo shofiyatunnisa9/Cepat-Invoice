@@ -2,11 +2,11 @@ import z from "zod";
 
 export const SchemaInvoice = z.object({
   noInvoice: z.string().optional(),
-  date: z.date(),
+  date: z.string(),
   company: z.string().min(1, { message: "Company required" }),
   address: z.string().min(1, { message: "Address required" }),
   phoneNumber: z.string().min(1, { message: "Phone Number required" }),
-  items: z.array(
+  item: z.array(
     z.object({
       product: z.string().nonempty(),
       price: z.number().min(1, { message: "price required" }),
@@ -14,9 +14,17 @@ export const SchemaInvoice = z.object({
       total: z.number().min(1, { message: "total required" }),
     })
   ),
-  originalPrice: z.number(),
+  subTotal: z.number(),
   discount: z.number(),
-  discountPrice: z.number(),
+  total: z.number(),
+  // invoices: z.instanceof(FileList),
 });
 
-export type schemaInvoiceDTO = z.infer<typeof SchemaInvoice>;
+export type InvoiceDTO = z.infer<typeof SchemaInvoice>;
+
+export const schemabecanda = z.object({
+  noInvoice: z.string().optional(),
+  date: z.date(),
+});
+
+export type becandaDTO = z.infer<typeof schemabecanda>;

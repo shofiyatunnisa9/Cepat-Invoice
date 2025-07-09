@@ -1,4 +1,4 @@
-import InvoiceDocument from "@/features/invoice/InvoiceDocument";
+import InvoiceDocument from "@/features/invoice/InvoiceDocumentv1";
 
 function InvoiceDocumentPDF() {
   return <InvoiceDocument />;

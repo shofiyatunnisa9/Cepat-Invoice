@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCreateProfile } from "@/hooks/useCreateProfile";
+import { useCreateProfile } from "@/features/profile/useCreateProfile";
 import { useState } from "react";
 
 function RegisterProfile() {

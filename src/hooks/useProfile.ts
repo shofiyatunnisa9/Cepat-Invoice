@@ -6,7 +6,11 @@ import Cookies from "js-cookie";
 export function useProfile() {
   const token = Cookies.get("token");
 
-  const { data: UserProfile, isLoading } = useQuery({
+  const {
+    data: UserProfile,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["Profile"],
     queryFn: async () => {
       const res = await api.get<profileType>("/profile", {
@@ -16,5 +20,5 @@ export function useProfile() {
     },
   });
 
-  return { UserProfile, isLoading };
+  return { UserProfile, isLoading, error };
 }

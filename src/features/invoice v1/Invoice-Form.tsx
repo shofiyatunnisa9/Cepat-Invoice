@@ -3,19 +3,27 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
 import InvoiceDocument from "./InvoiceDocument";
-import { SchemaInvoice, type schemaInvoiceDTO } from "@/lib/schemas/schemaItem";
-import { useStoreProfile } from "@/store/user";
+import { SchemaInvoice, type InvoiceDTO } from "@/lib/schemas/schemaItem";
 import { Button } from "@/components/ui/button";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useProfile } from "@/hooks/useProfile";
+import { PdfDocumentPrev } from "./InvoicePrev";
+import UseCreateInvoice from "@/hooks/useCreateInvoice";
+import { Form } from "@/components/ui/form";
 
 function InvoiceForm() {
+  const {form, mutation, onSubmit} = UseCreateInvoice()
   const today = new Date().toISOString().split("T")[0];
   const [date, setDate] = useState<string>(today);
   const [discount, setDiscount] = useState<number>(0);
-  const { profile } = useStoreProfile();
+  const { UserProfile } = useProfile();
+  const formattedDate = date.replace(/-/g, "")
+  const randomDigits = Math.floor(100 + Math.random() * 900)
+  const genNoInvoice = `INV-gen-${formattedDate}-${randomDigits}`
+
   const {
     register,
     handleSubmit,
@@ -23,46 +31,53 @@ function InvoiceForm() {
     control,
     watch,
     setValue,
-  } = useForm<schemaInvoiceDTO>({
+  } = useForm<InvoiceDTO>({
     mode: "onChange",
     resolver: zodResolver(SchemaInvoice),
     defaultValues: {
-      noInvoice: "",
-      date: new Date(),
-      address: "",
-      company: "",
-      phoneNumber: "",
-      items: [{ product: "", price: 0, quantity: 0, total: 0 }],
-      originalPrice: 0,
+      noInvoice: genNoInvoice,
+      date: today,
+      address: "aslkdajs",
+      company: "asdas",
+      phoneNumber: "asdasdas",
+      item: [{ product: "asdasdas", price: 0, quantity: 5, total: 50 }],
+      subTotal: 0,
       discount: 0,
-      discountPrice: 0,
+      total: 50,
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "items",
+    name: "item",
   });
 
-  const items = useWatch({ control, name: "items" }) || [];
-  const originalPrice = items.reduce((sum, item) => {
+  const items = useWatch({ control, name: "item" }) || [];
+  const subTotal = items.reduce((sum, item) => {
     const price = Number(item.price) || 0;
     const quantity = Number(item.quantity) || 0;
     return sum + price * quantity;
   }, 0);
 
-  const discountPrice = originalPrice - (originalPrice * discount) / 100;
+  const total = subTotal - (subTotal * discount) / 100;
 
   useEffect(() => {
+    setValue("subTotal", subTotal);
     setValue("discount", discount);
-    setValue("discountPrice", discountPrice);
-    setValue("originalPrice", originalPrice);
-  }, [discount, discountPrice, setValue, originalPrice]);
-  const handleClick = async (data: schemaInvoiceDTO) => {
+    setValue("total", total);
+  }, [discount, total, setValue, subTotal]);
+  
+  const handleClick = async (data: InvoiceDTO) => {
+    // setValue("invoices", PdfDocumentPrev)
     console.log(data);
   };
+
+  if(!UserProfile) return <h1> User belum membuat profile</h1>
   return (
+    
     <div className="flex flex-col">
+       <Form {...form}>
+        <form onSubmit={handleSubmit(onSubmit)}>
       <p className="text-3xl text-center font-bold ">Invoice Form</p>
       <div className=" max-w-4xl  pl-40 space-y-10">
         <div className="flex justify-between items-center border-b pb-4">
@@ -84,11 +99,12 @@ function InvoiceForm() {
               {...register("noInvoice")}
               className="w-35 mt-1"
               id="noInvoice"
+              value={genNoInvoice}
               placeholder="0000000xx"
             />
           </div>
           <div className="text-right">
-            <img src={profile?.image} className="size-30"></img>
+            <img src={UserProfile?.image} className="size-30"></img>
           </div>
         </div>
 
@@ -117,6 +133,7 @@ function InvoiceForm() {
               type="text"
               {...register("phoneNumber")}
               placeholder="Phone"
+              
             />
             {errors.phoneNumber && (
               <p className="text-destructive"> errors.phoneNumber.message </p>
@@ -124,9 +141,9 @@ function InvoiceForm() {
           </div>
           <div className="pl-20 space-y-2">
             <h2 className="font-semibold mb-2">From : </h2>
-            <p>{profile?.company}</p>
-            <p>{profile?.address}</p>
-            <p>{profile?.phone}</p>
+            <p>{UserProfile?.company}</p>
+            <p>{UserProfile?.address}</p>
+            <p>{UserProfile?.phone}</p>
           </div>
         </div>
 
@@ -148,8 +165,8 @@ function InvoiceForm() {
             {/* <CreateDialog /> */}
             <div className="space-y-2">
               {fields.map((field, index) => {
-                const price = watch(`items.${index}.price`) || 0;
-                const quantity = watch(`items.${index}.quantity`) || 0;
+                const price = watch(`item.${index}.price`) || 0;
+                const quantity = watch(`item.${index}.quantity`) || 0;
                 const total = price * quantity;
                 // const total = field.price * field.quantity;
                 return (
@@ -157,7 +174,7 @@ function InvoiceForm() {
                     <div className="flex flex-row gap-2 mt-1">
                       <div className="w-65">
                         <Input
-                          {...register(`items.${index}.product`)}
+                          {...register(`item.${index}.product`)}
                           type="text"
                           id="product"
                           placeholder="Product"
@@ -165,7 +182,7 @@ function InvoiceForm() {
                       </div>
                       <div className="w-35">
                         <Input
-                          {...register(`items.${index}.price`, {
+                          {...register(`item.${index}.price`, {
                             valueAsNumber: true,
                           })}
                           type="number"
@@ -176,7 +193,7 @@ function InvoiceForm() {
                       </div>
                       <div className="w-2/8">
                         <Input
-                          {...register(`items.${index}.quantity`, {
+                          {...register(`item.${index}.quantity`, {
                             valueAsNumber: true,
                           })}
                           type="number"
@@ -190,7 +207,7 @@ function InvoiceForm() {
                         className="w-1/8"
                         value={total}
                         readOnly
-                        {...register(`items.${index}.total`, {
+                        {...register(`item.${index}.total`, {
                           valueAsNumber: true,
                         })}
                       />
@@ -225,7 +242,7 @@ function InvoiceForm() {
                   <span className="">Original Price : </span>
                   <span>
                     Rp.
-                    {originalPrice.toLocaleString()}
+                    {subTotal.toLocaleString()}
                   </span>
                 </div>
                 <div className="flex space-x-20">
@@ -241,25 +258,27 @@ function InvoiceForm() {
                 </div>
                 <div className="flex justify-between py-1">
                   <span>Discounted Price : </span>
-                  <span>Rp. {discountPrice.toLocaleString()}</span>
+                  <span>Rp. {total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between font-bold border-t mt-2 pt-2">
                   <span>Total</span>
-                  <span>Rp. {discountPrice.toLocaleString()}</span>
+                  <span>Rp. {total.toLocaleString()}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <InvoiceDocument data={watch()} />
+        {/* <InvoiceDocument data={watch()} profile={UserProfile} /> */}
         {/* <InvoiceprevPDF /> */}
         <Button
+        type="submit"
           className="ml-2 cursor-pointer"
-          onClick={handleSubmit(handleClick)}
         >
           Submit
         </Button>
       </div>
+      </form>
+      </Form>
     </div>
   );
 }
