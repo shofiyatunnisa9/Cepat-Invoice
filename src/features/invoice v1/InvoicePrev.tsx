@@ -70,15 +70,23 @@ const styles = StyleSheet.create({
     borderTop: "1 solid #000",
     fontWeight: "bold",
   },
+  footer: {
+    position: "absolute",
+    bottom: 20,
+    left: 30,
+    right: 30,
+    textAlign: "center",
+    fontSize: 10,
+    color: "gray",
+  },
 });
 interface PdfProps {
   data: InvoiceDTO;
-  profile: profileType
+  profile: profileType;
 }
 
 // 2. Create PDF Document Component
 export function PdfDocumentPrev({ data, profile }: PdfProps) {
-  
   const {
     company,
     address,
@@ -167,6 +175,9 @@ export function PdfDocumentPrev({ data, profile }: PdfProps) {
             <Text>Rp. {total}</Text>
           </View>
         </View>
+
+        {/* Footer */}
+        <Text style={styles.footer}>Generated from fast-invoice</Text>
       </Page>
     </Document>
   );

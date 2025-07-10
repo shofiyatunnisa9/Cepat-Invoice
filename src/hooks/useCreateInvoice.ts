@@ -14,7 +14,7 @@ function UseCreateInvoice() {
   });
   const { UserProfile } = useProfile();
 
-  const mutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationKey: ["CreateInvoice"],
     mutationFn: async (data: InvoiceDTO) => {
       if (!UserProfile) throw new Error("User profile belum siap");
@@ -40,16 +40,16 @@ function UseCreateInvoice() {
     },
     onSuccess: () => {
       toast.success("create invoices");
-      form.reset;
+      form.reset();
     },
     onError: () => {
       toast.error("failed create invoice");
     },
   });
   const onSubmit = async (data: InvoiceDTO) => {
-    mutation.mutate(data);
+    mutate(data);
   };
-  return { form, mutation, onSubmit };
+  return { form, isPending, mutate, onSubmit };
 }
 
 export default UseCreateInvoice;

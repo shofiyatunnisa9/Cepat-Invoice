@@ -1,4 +1,4 @@
-import type { schemaItemDTO } from "@/lib/schemas/schemaItem";
+import type { InvoiceDTO } from "@/lib/schemas/schemaItem";
 import { createContext, useContext, useState, type ReactNode } from "react";
 
 export interface InvoiceData {
@@ -8,7 +8,7 @@ export interface InvoiceData {
   address: string;
   phone: string;
 
-  items: schemaItemDTO[];
+  items: InvoiceDTO[];
 }
 
 interface InvoiceContextType {
