@@ -138,24 +138,24 @@ function InvoiceForm() {
                     <tr className="border-b">
                       <th className="w-2/8 text-lg py-2">Product</th>
 
-                      <th className="w-1/8 text-lg py-2">Price</th>
+                      <th className="w-2/8 text-lg py-2">Price</th>
 
                       <th className="w-2/8 text-lg py-2">Quantity</th>
 
-                      <th className="w-1/8 text-lg py-2">Total</th>
+                      <th className="w-3/8 text-lg py-2">Total</th>
                     </tr>
                   </thead>
                 </table>
                 {/* <CreateDialog /> */}
                 <div className="space-y-2">
-                  {fields.map((field, index) => {
+                  {fields.map((_, index) => {
                     const price = watch(`item.${index}.price`) || 0;
                     const quantity = watch(`item.${index}.quantity`) || 0;
                     const total = price * quantity;
                     return (
                       <div key={index}>
                         <div className="flex flex-row gap-2 mt-1">
-                          <div className="w-65">
+                          <div className="w-3/8">
                             <Input
                               {...register(`item.${index}.product`)}
                               type="text"
@@ -163,7 +163,7 @@ function InvoiceForm() {
                               placeholder="Product"
                             />
                           </div>
-                          <div className="w-35">
+                          <div className="w-2/8">
                             <Input
                               {...register(`item.${index}.price`, {
                                 valueAsNumber: true,
@@ -174,7 +174,7 @@ function InvoiceForm() {
                               className="appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-moz-appearance]:textfield"
                             />
                           </div>
-                          <div className="w-3/8">
+                          <div className="w-2/8">
                             <Input
                               {...register(`item.${index}.quantity`, {
                                 valueAsNumber: true,
@@ -187,7 +187,7 @@ function InvoiceForm() {
                           </div>
 
                           <Input
-                            className="w-1/8"
+                            className="w-2/8"
                             // value={price * quantity}
                             value={total}
                             readOnly
@@ -239,9 +239,7 @@ function InvoiceForm() {
                           appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-moz-appearance]:textfields 
                           w-7 px-0
                           focus-visible:ring-0 focus-visible:border-transparent focus-visible:outline-none
-                          border-0
-
-                          "
+                          border-0"
                           placeholder="0"
                           value={discount}
                           onChange={(e) => setDiscount(Number(e.target.value))}
