@@ -2,17 +2,19 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { pdf, PDFViewer } from "@react-pdf/renderer";
 import { PdfDocumentPrev } from "./InvoicePrev";
-import type { InvoiceDTO } from "@/lib/schemas/schemaItem";
+import type { invoiceDTO } from "@/lib/schemas/schemaItem";
 import type { profileType } from "@/types/user";
 
 interface InvoiceProps {
-  data: InvoiceDTO;
-  profile: profileType
+  data: invoiceDTO;
+  profile: profileType;
 }
 
 export function InvoiceDocument({ data, profile }: InvoiceProps) {
   const handleDownload = async () => {
-    const blob = await pdf(<PdfDocumentPrev data={data} profile={profile} />).toBlob();
+    const blob = await pdf(
+      <PdfDocumentPrev data={data} profile={profile} />
+    ).toBlob();
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;

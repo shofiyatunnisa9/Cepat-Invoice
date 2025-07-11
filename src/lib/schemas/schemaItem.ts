@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const SchemaInvoice = z.object({
+export const schemaInvoice = z.object({
   noInvoice: z.string().optional(),
   date: z.string(),
   company: z.string().min(1, { message: "Company required" }),
@@ -17,10 +17,9 @@ export const SchemaInvoice = z.object({
   subTotal: z.number(),
   discount: z.number(),
   total: z.number(),
-  // invoices: z.instanceof(FileList),
 });
 
-export type InvoiceDTO = z.infer<typeof SchemaInvoice>;
+export type invoiceDTO = z.infer<typeof schemaInvoice>;
 
 export const schemabecanda = z.object({
   noInvoice: z.string().optional(),

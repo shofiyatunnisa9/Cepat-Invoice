@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useInputForm } from "@/hooks/useInputForm";
-import { SchemaInvoice } from "@/lib/schemas/schemaItem";
-import type { InvoiceDTO } from "@/lib/schemas/schemaItem";
+import { schemaInvoice } from "@/lib/schemas/schemaItem";
+import type { invoiceDTO } from "@/lib/schemas/schemaItem";
 import { api } from "@/utils/api";
 import { useFieldArray } from "react-hook-form";
 import { IoAddCircleSharp } from "react-icons/io5";
@@ -11,13 +11,13 @@ import { toast } from "sonner";
 
 function CreateDialog() {
   const { control, register, watch, handleSubmit } =
-    useInputForm<InvoiceDTO>(SchemaInvoice);
+    useInputForm<invoiceDTO>(schemaInvoice);
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "item",
   });
-  const onSubmit = async (data: InvoiceDTO) => {
+  const onSubmit = async (data: invoiceDTO) => {
     try {
       const res = await api.post("/invoice", data);
       console.log(res);

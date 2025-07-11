@@ -1,4 +1,4 @@
-import type { InvoiceDTO } from "@/lib/schemas/schemaItem";
+import type { invoiceDTO } from "@/lib/schemas/schemaItem";
 import type { profileType } from "@/types/user";
 import {
   Document,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
 });
 interface PdfProps {
-  data: InvoiceDTO;
+  data: invoiceDTO;
   profile: profileType;
 }
 

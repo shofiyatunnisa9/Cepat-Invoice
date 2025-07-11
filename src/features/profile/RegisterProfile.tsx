@@ -8,7 +8,7 @@ function RegisterProfile() {
   const { form, onSubmit, isPending } = useCreateProfile();
   const { register, formState, handleSubmit, setValue } = form;
   const { errors } = formState;
-  const [preview, setPreview] = useState<string | undefined>(undefined)
+  const [preview, setPreview] = useState<string | undefined>(undefined);
 
   return (
     <div className="flex justify-center w-auto">
@@ -17,13 +17,17 @@ function RegisterProfile() {
           className=" pt-5 w-2/4 space-y-5 items-center"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <p className="text-3xl text-center font-bold">Create Account Profile</p>
+          <p className="text-3xl text-center font-bold">
+            Create Account Profile
+          </p>
 
-          <div  className="px-55">
+          <div className="px-55">
             <label htmlFor="image">
               <img
                 className="rounded-full size-30"
-                src={preview ?? "https://api.dicebear.com/9.x/icons/svg?seed=Brian"}
+                src={
+                  preview ?? "https://api.dicebear.com/9.x/icons/svg?seed=Brian"
+                }
               />
             </label>
             <Input

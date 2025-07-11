@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
-import { SchemaInvoice, type InvoiceDTO } from "@/lib/schemas/schemaItem";
+import { schemaInvoice, type invoiceDTO } from "@/lib/schemas/schemaItem";
 import { Button } from "@/components/ui/button";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { RiDeleteBin6Fill } from "react-icons/ri";
@@ -29,9 +29,9 @@ function InvoiceForm() {
     control,
     watch,
     setValue,
-  } = useForm<InvoiceDTO>({
+  } = useForm<invoiceDTO>({
     mode: "onChange",
-    resolver: zodResolver(SchemaInvoice),
+    resolver: zodResolver(schemaInvoice),
     defaultValues: {
       noInvoice: genNoInvoice,
       date: today,
@@ -188,7 +188,6 @@ function InvoiceForm() {
 
                           <Input
                             className="w-2/8"
-                            // value={price * quantity}
                             value={total}
                             readOnly
                             {...register(`item.${index}.total`, {
@@ -247,10 +246,6 @@ function InvoiceForm() {
                         <span>%</span>
                       </div>
                     </div>
-                    {/* <div className="flex justify-between py-1">
-                      <span>Total : </span>
-                      <span>Rp. {total.toLocaleString()}</span>
-                    </div> */}
                     <div className="flex justify-between font-bold border-t mt-2 pt-2">
                       <span>Total</span>
                       <span>Rp. {total.toLocaleString()}</span>
