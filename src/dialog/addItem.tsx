@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useInputForm } from "@/hooks/useInputForm";
-import { SchemaInvoice, type InvoiceDTO } from "@/lib/schemas/schemaItem";
+import { SchemaInvoice } from "@/lib/schemas/schemaItem";
+import type { InvoiceDTO } from "@/lib/schemas/schemaItem";
 import { api } from "@/utils/api";
 import { useFieldArray } from "react-hook-form";
 import { IoAddCircleSharp } from "react-icons/io5";
@@ -38,9 +39,6 @@ function CreateDialog() {
               id="product"
               placeholder="Product"
             />
-            {/* {errors.product && (
-                <p className="text-destructive">{errors.product.message}</p>
-              )} */}
           </div>
           <div className="w-35">
             <Input
@@ -52,9 +50,6 @@ function CreateDialog() {
               placeholder="Price"
               className="appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-moz-appearance]:textfield"
             />
-            {/* {errors.price && (
-                <p className="text-destructive">{errors.price.message}</p>
-              )} */}
           </div>
           <div className="w-2/8">
             <Input
@@ -66,9 +61,6 @@ function CreateDialog() {
               placeholder="Quantity"
               className="appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-moz-appearance]:textfield"
             />
-            {/* {errors.quantity && (
-                <p className="text-destructive">{errors.quantity.message}</p>
-                )} */}
           </div>
 
           <Input
