@@ -4,15 +4,14 @@ import { useInputForm } from "@/hooks/useInputForm";
 import { authSchema, type authSchemaDTO } from "@/lib/schemas/schemaRegister";
 import { Link } from "react-router-dom";
 import { useMutateData } from "@/hooks/useMutate";
+import { MdOutlineAttachEmail } from "react-icons/md";
+import { TbPasswordUser } from "react-icons/tb";
 
 function Login() {
   const { register, handleSubmit, errors } =
     useInputForm<authSchemaDTO>(authSchema);
 
-  const {
-    mutateAsync,
-    isPending,
-  } = useMutateData<authSchemaDTO>({
+  const { mutateAsync, isPending } = useMutateData<authSchemaDTO>({
     key: "login",
     endpoint: "/login",
     schema: authSchema,
@@ -26,18 +25,22 @@ function Login() {
 
   return (
     <form
-      className="flex flex-col border border-border px-10 py-5 rounded-md space-y-5"
+      className="flex flex-col border border-border px-15 py-5 rounded-lg space-y-5"
       onSubmit={handleSubmit(submit)}
     >
       <h1 className="text-center text-xl font-bold">Login</h1>
-      <div>
-        <label htmlFor="email" className="text-md">
-          Email:
+      <div className="w-80">
+        <label
+          htmlFor="email"
+          className="text-md flex gap-2 items-center font-bold"
+        >
+          <MdOutlineAttachEmail />
+          Email
         </label>
         <Input
           id="email"
-          placeholder="Email"
           type="email"
+          placeholder="Email"
           {...register("email")}
         />
         {errors.email && (
@@ -45,13 +48,17 @@ function Login() {
         )}
       </div>
       <div>
-        <label htmlFor="password" className="text-md">
-          Password:{" "}
+        <label
+          htmlFor="password"
+          className="text-md flex gap-2 items-center font-bold"
+        >
+          <TbPasswordUser />
+          Password
         </label>
         <Input
           id="password"
-          placeholder="Password"
           type="password"
+          placeholder="Password"
           {...register("password")}
         />
         {errors.password && (
@@ -63,7 +70,7 @@ function Login() {
         className="text-lg cursor-pointer"
         type="submit"
       >
-        Login{" "}
+        {isPending ? "Loading.." : "Login"}
       </Button>
       <div>
         <p>

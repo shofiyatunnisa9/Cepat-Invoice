@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useInputForm } from "@/hooks/useInputForm";
 import { toast } from "sonner";
 import { api } from "@/utils/api";
+import { MdOutlineAttachEmail } from "react-icons/md";
+import { TbPasswordUser } from "react-icons/tb";
 function Register() {
   const { register, handleSubmit, errors } =
     useInputForm<authSchemaDTO>(authSchema);
@@ -25,13 +27,17 @@ function Register() {
 
   return (
     <form
-      className="flex flex-col border border-border px-10 py-5 rounded-md space-y-5"
+      className="flex flex-col border border-border px-15 py-5 rounded-md space-y-5"
       onSubmit={handleSubmit(submit)}
     >
       <h1 className="text-center text-xl font-bold">Register</h1>
-      <div>
-        <label htmlFor="email" className="text-md">
-          Email:
+      <div className="w-80">
+        <label
+          htmlFor="email"
+          className="text-md flex gap-2 items-center font-bold"
+        >
+          <MdOutlineAttachEmail />
+          Email
         </label>
         <Input
           id="email"
@@ -42,8 +48,12 @@ function Register() {
         {errors.email && <p>{errors.email.message}</p>}
       </div>
       <div>
-        <label htmlFor="password" className="text-md">
-          Password:{" "}
+        <label
+          htmlFor="password"
+          className="text-md flex gap-2 items-center font-bold"
+        >
+          <TbPasswordUser />
+          Password{" "}
         </label>
         <Input
           id="password"
@@ -60,7 +70,7 @@ function Register() {
         <p>
           Click here to{" "}
           <Link to={"/login"} className="text-primary">
-            login
+            Login
           </Link>
         </p>
       </div>

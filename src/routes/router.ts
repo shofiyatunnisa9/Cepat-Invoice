@@ -1,3 +1,4 @@
+import ProtectedRoute from "@/components/protectedAuth";
 import LayoutAuth from "@/components/ui/LayoutAuth";
 import LayoutDashboard from "@/components/ui/LayoutDashboard";
 import DashboardPage from "@/pages/DashboardPage";
@@ -9,11 +10,16 @@ import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
-    Component: LayoutDashboard,
+    Component: ProtectedRoute,
     children: [
-      { path: "/", Component: DashboardPage },
-      { path: "/profile", Component: profilePage },
-      { path: "/invoice", Component: invoiceform },
+      {
+        Component: LayoutDashboard,
+        children: [
+          { path: "/", Component: DashboardPage },
+          { path: "/profile", Component: profilePage },
+          { path: "/invoice", Component: invoiceform },
+        ],
+      },
     ],
   },
   {

@@ -7,7 +7,7 @@ import LogoutPage from "@/pages/logout";
 
 const Sidebar = () => {
   return (
-    <div className="bg-cyan-200 p-4 flex flex-col gap-5">
+    <div className="bg-cyan-200 p-4 flex flex-col gap-5 h-full">
       <div className="text-2xl font-bold">
         <img className="w-35 ml-10 mt-5" src={logo1} />
       </div>
