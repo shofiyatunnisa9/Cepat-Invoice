@@ -9,7 +9,7 @@ import { useProfile } from "./useProfile";
 import { useEffect } from "react";
 
 export function useEditProfile() {
-  const { data } = useProfile();
+  const { UserProfile } = useProfile();
 
   const form = useForm<profileDTO>({
     mode: "onChange",
@@ -24,15 +24,15 @@ export function useEditProfile() {
   });
 
   useEffect(() => {
-    if (data) {
+    if (UserProfile) {
       form.reset({
-        company: data.company,
-        phoneNumber: data.phone,
-        address: data.address,
-        imageUrl: data.image,
+        company: UserProfile.company,
+        phoneNumber: UserProfile.phone,
+        address: UserProfile.address,
+        imageUrl: UserProfile.image,
       });
     }
-  }, [data, form]);
+  }, [UserProfile, form]);
 
   const mutation = useMutation({
     mutationKey: ["EditProfile"],
