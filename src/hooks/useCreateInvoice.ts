@@ -1,4 +1,4 @@
-import { SchemaInvoice, type InvoiceDTO } from "@/lib/schemas/schemaItem";
+import { schemaInvoice, type invoiceDTO } from "@/lib/schemas/schemaItem";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -8,15 +8,15 @@ import { generateInvoicePdf } from "@/features/invoice v1/generatePdf";
 import { api } from "@/utils/api";
 
 function UseCreateInvoice() {
-  const form = useForm<InvoiceDTO>({
+  const form = useForm<invoiceDTO>({
     mode: "onChange",
-    resolver: zodResolver(SchemaInvoice),
+    resolver: zodResolver(schemaInvoice),
   });
   const { UserProfile } = useProfile();
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["CreateInvoice"],
-    mutationFn: async (data: InvoiceDTO) => {
+    mutationFn: async (data: invoiceDTO) => {
       if (!UserProfile) throw new Error("User profile belum siap");
 
       const pdfFile = await generateInvoicePdf(data, UserProfile);
@@ -46,7 +46,7 @@ function UseCreateInvoice() {
       toast.error("failed create invoice");
     },
   });
-  const onSubmit = async (data: InvoiceDTO) => {
+  const onSubmit = async (data: invoiceDTO) => {
     mutate(data);
   };
   return { form, isPending, mutate, onSubmit };
